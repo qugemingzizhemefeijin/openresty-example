@@ -1,4 +1,5 @@
-# Install °²×°Á÷³Ì<br/>
+# Install å®‰è£…æµç¨‹<br/>
+å‚è€ƒå¼€æ¶›çš„åšå®¢ http://jinnianshilongnian.iteye.com/blog/2190344<br/>
 nginx-1.13.6.tar.gz openresty-1.13.6.1.tar.gz<br/>
 <br/>
 yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl<br/>
@@ -9,21 +10,21 @@ tar -zxvf openresty-1.13.6.1.tar.gz<br/>
 cd bundle/LuaJIT-2.1-20171103/<br/>
 make clean && make && make install<br/>
 <br/>
-·µ»Øµ½bundleÄ¿Â¼<br/>
+è¿”å›åˆ°bundleç›®å½•<br/>
 wget -q -O ngx_cache_purge.2.3.tar.gz https://github.com/FRiCKLE/ngx_cache_purge/archive/2.3.tar.gz<br/>
 tar -zxvf ngx_cache_purge.2.3.tar.gz<br/>
 <br/>
 wget -q -O nginx_upstream_check_module.v0.3.0.tar.gz https://github.com/yaoweibin/nginx_upstream_check_module/archive/v0.3.0.tar.gz<br/>
 tar -zxvf nginx_upstream_check_module.v0.3.0.tar.gz <br/>
 <br/>
-°²×°openresty<br/>
+å®‰è£…openresty<br/>
 ./configure --prefix=/usr/local/openresty-1.13.6.1 --with-http_realip_module --with-pcre --with-luajit --add-module=./bundle/ngx_cache_purge-2.3/ --add-module=./bundle/nginx_upstream_check_module-0.3.0/ -j2<br/>
 gmake && gmake install<br/>
 <br/>
 cd /usr/local/<br/>
 ln -s openresty-1.13.6.1/ openresty<br/>
 <br/>
-°²×°nginx<br/>
+å®‰è£…nginx<br/>
 wget -q http://nginx.org/download/nginx-1.13.6.tar.gz<br/>
 tar -zxvf nginx-1.13.6.tar.gz<br/>
 <br/>
@@ -34,14 +35,14 @@ export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.1<br/>
 make -j2 && make install<br/>
 <br/>
 <br/>
-# ÅäÖÃnginx openresty<br/>
-nginx.confÖĞhttpÄ£¿éĞÂÔö<br/>
+# é…ç½®nginx openresty<br/>
+nginx.confä¸­httpæ¨¡å—æ–°å¢<br/>
 <br/>
-lua_package_path "/usr/local/openresty/lualib/?.lua;;";#lua Ä£¿é<br/>
-lua_package_cpath "/usr/local/openresty/lualib/?.so;;";#cÄ£¿é<br/>
+lua_package_path "/usr/local/openresty/lualib/?.lua;;";#lua æ¨¡å—<br/>
+lua_package_cpath "/usr/local/openresty/lualib/?.so;;";#cæ¨¡å—<br/>
 <br/>
-½«Ô­À´µÄserverÇø¿éÉ¾³ıµô<br/>
-ĞÂ½¨lua.conf·ÅÈëserverÇø¿é<br/>
+å°†åŸæ¥çš„serveråŒºå—åˆ é™¤æ‰<br/>
+æ–°å»ºlua.confæ”¾å…¥serveråŒºå—<br/>
 <br/>
 #lua.conf  <br/>
 server {  <br/>
@@ -54,72 +55,72 @@ server {  <br/>
     }<br/>
 }<br/>
 <br/>
-nginxµÄconfÄ¿Â¼ĞÂ½¨luaÎÄ¼ş¼Ğ<br/>
+nginxçš„confç›®å½•æ–°å»ºluaæ–‡ä»¶å¤¹<br/>
 vi test.lua<br/>
 <br/>
-Ğ´Èë´ËĞĞ<br/>
+å†™å…¥æ­¤è¡Œ<br/>
 ngx.say("hello world");<br/>
 <br/>
-Ö´ĞĞ<br/>
+æ‰§è¡Œ<br/>
 /usr/local/nginx/sbin/nginx -t<br/>
 <br/>
-Èç¹û±¨´íÎó<br/>
+å¦‚æœæŠ¥é”™è¯¯<br/>
 /usr/local/nginx/sbin/nginx: error while loading shared libraries: libluajit-5.1.so.2: cannot open shared object file: No such file or directory<br/>
 <br/>
-¿ÉÒÔÖ´ĞĞ´Ë¶Î<br/>
+å¯ä»¥æ‰§è¡Œæ­¤æ®µ<br/>
 echo "/usr/local/lib" >> /etc/ld.so.conf.d/usr_local_lib.conf<br/>
 <br/>
-ldd nginxºó²é¿´ÓÉ<br/>
+ldd nginxåæŸ¥çœ‹ç”±<br/>
 libluajit-5.1.so.2 => not found<br/>
-±äÎª<br/>
+å˜ä¸º<br/>
 libluajit-5.1.so.2 => /usr/local/lib/libluajit-5.1.so.2 (0x00007f72d2e3c000)<br/>
 <br/>
-ÔÙ´ÎÖ´ĞĞ<br/>
+å†æ¬¡æ‰§è¡Œ<br/>
 /usr/local/nginx/sbin/nginx -t<br/>
 <br/>
 nginx: the configuration file /usr/local/nginx-1.13.6/conf/nginx.conf syntax is ok<br/>
 nginx: configuration file /usr/local/nginx-1.13.6/conf/nginx.conf test is successful<br/>
 <br/>
-Ôò´ú±í°²×°³É¹¦<br/>
+åˆ™ä»£è¡¨å®‰è£…æˆåŠŸ<br/>
 <br/>
 # lua_code_cache<br/>
-Ä¬ÈÏÇé¿öÏÂlua_code_cache  ÊÇ¿ªÆôµÄ£¬¼´»º´ælua´úÂë£¬¼´Ã¿´Îlua´úÂë±ä¸ü±ØĞëreload nginx²ÅÉúĞ§£¬Èç¹ûÔÚ¿ª·¢½×¶Î¿ÉÒÔÍ¨¹ılua_code_cache  off;¹Ø±Õ»º´æ£¬ÕâÑùµ÷ÊÔÊ±Ã¿´ÎĞŞ¸Älua´úÂë²»ĞèÒªreload nginx£»µ«ÊÇÕıÊ½»·¾³Ò»¶¨¼ÇµÃ¿ªÆô»º´æ¡£<br/>
+é»˜è®¤æƒ…å†µä¸‹lua_code_cache  æ˜¯å¼€å¯çš„ï¼Œå³ç¼“å­˜luaä»£ç ï¼Œå³æ¯æ¬¡luaä»£ç å˜æ›´å¿…é¡»reload nginxæ‰ç”Ÿæ•ˆï¼Œå¦‚æœåœ¨å¼€å‘é˜¶æ®µå¯ä»¥é€šè¿‡lua_code_cache  off;å…³é—­ç¼“å­˜ï¼Œè¿™æ ·è°ƒè¯•æ—¶æ¯æ¬¡ä¿®æ”¹luaä»£ç ä¸éœ€è¦reload nginxï¼›ä½†æ˜¯æ­£å¼ç¯å¢ƒä¸€å®šè®°å¾—å¼€å¯ç¼“å­˜ã€‚<br/>
 <br/>
-ÔÚlua.confÖĞ<br/>
+åœ¨lua.confä¸­<br/>
 location /lua {  <br/>
         default_type 'text/html';  <br/>
-        lua_code_cache off;  #ĞÂÔöµÄÊÇ´ËĞĞ<br/>
+        lua_code_cache off;  #æ–°å¢çš„æ˜¯æ­¤è¡Œ<br/>
         content_by_lua_file conf/lua/test.lua;  <br/>
 }<br/>
 <br/>
-¿ªÆôºóreload nginx»á¿´µ½ÈçÏÂ±¨¾¯<br/>
+å¼€å¯åreload nginxä¼šçœ‹åˆ°å¦‚ä¸‹æŠ¥è­¦<br/>
 nginx: [alert] lua_code_cache is off; this will hurt performance in /usr/servers/nginx/conf/lua.conf:8<br/>
 <br/>
 <br/>
-# ´íÎóÈÕÖ¾<br/>
+# é”™è¯¯æ—¥å¿—<br/>
 <br/>
-Èç¹ûÔËĞĞ¹ı³ÌÖĞ³öÏÖ´íÎó£¬Çë²»ÒªÍü¼Ç²é¿´´íÎóÈÕÖ¾¡£ <br/>
+å¦‚æœè¿è¡Œè¿‡ç¨‹ä¸­å‡ºç°é”™è¯¯ï¼Œè¯·ä¸è¦å¿˜è®°æŸ¥çœ‹é”™è¯¯æ—¥å¿—ã€‚ <br/>
 tail -f /usr/local/nginx/logs/error.log<br/>
 <br/>
-µ½´ËÎÒÃÇµÄ»ù±¾»·¾³´î½¨Íê±Ï¡£<br/>
+åˆ°æ­¤æˆ‘ä»¬çš„åŸºæœ¬ç¯å¢ƒæ­å»ºå®Œæ¯•ã€‚<br/>
 <br/>
 <br/>
-# nginx+luaÏîÄ¿¹¹½¨<br/>
-ÒÔºóÎÒÃÇµÄnginx lua¿ª·¢ÎÄ¼ş»áÔ½À´Ô½¶à£¬ÎÒÃÇÓ¦¸Ã°ÑÆäÏîÄ¿»¯£¬ÒÑ·½±ã¿ª·¢¡£ÏîÄ¿Ä¿Â¼½á¹¹ÈçÏÂËùÊ¾£º<br/>
+# nginx+luaé¡¹ç›®æ„å»º<br/>
+ä»¥åæˆ‘ä»¬çš„nginx luaå¼€å‘æ–‡ä»¶ä¼šè¶Šæ¥è¶Šå¤šï¼Œæˆ‘ä»¬åº”è¯¥æŠŠå…¶é¡¹ç›®åŒ–ï¼Œå·²æ–¹ä¾¿å¼€å‘ã€‚é¡¹ç›®ç›®å½•ç»“æ„å¦‚ä¸‹æ‰€ç¤ºï¼š<br/>
 <br/>
 example<br/>
-    example.conf     ---¸ÃÏîÄ¿µÄnginx ÅäÖÃÎÄ¼ş<br/>
-    lua              ---ÎÒÃÇ×Ô¼ºµÄlua´úÂë<br/>
+    example.conf     ---è¯¥é¡¹ç›®çš„nginx é…ç½®æ–‡ä»¶<br/>
+    lua              ---æˆ‘ä»¬è‡ªå·±çš„luaä»£ç <br/>
       test.lua<br/>
-    lualib            ---luaÒÀÀµ¿â/µÚÈı·½ÒÀÀµ<br/>
+    lualib            ---luaä¾èµ–åº“/ç¬¬ä¸‰æ–¹ä¾èµ–<br/>
       *.lua<br/>
       *.so<br/>
 <br/>
-ÆäÖĞÎÒÃÇ°ÑlualibÒ²·Åµ½ÏîÄ¿ÖĞµÄºÃ´¦¾ÍÊÇÒÔºó²¿ÊğµÄÊ±ºò¿ÉÒÔÒ»Æğ²¿Êğ£¬·ÀÖ¹ÓĞµÄ·şÎñÆ÷Íü¼Ç¸´ÖÆÒÀÀµ¶øÔì³ÉÈ±ÉÙÒÀÀµµÄÇé¿ö¡£<br/>
+å…¶ä¸­æˆ‘ä»¬æŠŠlualibä¹Ÿæ”¾åˆ°é¡¹ç›®ä¸­çš„å¥½å¤„å°±æ˜¯ä»¥åéƒ¨ç½²çš„æ—¶å€™å¯ä»¥ä¸€èµ·éƒ¨ç½²ï¼Œé˜²æ­¢æœ‰çš„æœåŠ¡å™¨å¿˜è®°å¤åˆ¶ä¾èµ–è€Œé€ æˆç¼ºå°‘ä¾èµ–çš„æƒ…å†µã€‚<br/>
 <br/>
-ÎÒÃÇ½«ÏîÄ¿·Åµ½µ½/usr/exampleÄ¿Â¼ÏÂ¡£<br/>
+æˆ‘ä»¬å°†é¡¹ç›®æ”¾åˆ°åˆ°/usr/exampleç›®å½•ä¸‹ã€‚<br/>
 <br/>
-/usr/local/nginx/conf/nginx.confÅäÖÃÎÄ¼şÈçÏÂ(´Ë´¦ÎÒÃÇ×îĞ¡»¯ÁËÅäÖÃÎÄ¼ş)<br/>
+/usr/local/nginx/conf/nginx.confé…ç½®æ–‡ä»¶å¦‚ä¸‹(æ­¤å¤„æˆ‘ä»¬æœ€å°åŒ–äº†é…ç½®æ–‡ä»¶)<br/>
 <br/>
 #user  nobody;<br/>
 worker_processes  2;<br/>
@@ -131,16 +132,16 @@ http {<br/>
     include       mime.types;<br/>
     default_type  text/html;<br/>
   <br/>
-    #luaÄ£¿éÂ·¾¶£¬ÆäÖĞ¡±;;¡±±íÊ¾Ä¬ÈÏËÑË÷Â·¾¶£¬Ä¬ÈÏµ½/usr/servers/nginxÏÂÕÒ<br/>
-    lua_package_path "/usr/example/lualib/?.lua;;";  #lua Ä£¿é<br/>
-    lua_package_cpath "/usr/example/lualib/?.so;;";  #cÄ£¿é<br/>
+    #luaæ¨¡å—è·¯å¾„ï¼Œå…¶ä¸­â€;;â€è¡¨ç¤ºé»˜è®¤æœç´¢è·¯å¾„ï¼Œé»˜è®¤åˆ°/usr/servers/nginxä¸‹æ‰¾<br/>
+    lua_package_path "/usr/example/lualib/?.lua;;";  #lua æ¨¡å—<br/>
+    lua_package_cpath "/usr/example/lualib/?.so;;";  #cæ¨¡å—<br/>
     include /usr/example/example.conf;<br/>
 }  <br/>
-Í¨¹ı¾ø¶ÔÂ·¾¶°üº¬ÎÒÃÇµÄluaÒÀÀµ¿âºÍnginxÏîÄ¿ÅäÖÃÎÄ¼ş¡£<br/>
+é€šè¿‡ç»å¯¹è·¯å¾„åŒ…å«æˆ‘ä»¬çš„luaä¾èµ–åº“å’Œnginxé¡¹ç›®é…ç½®æ–‡ä»¶ã€‚<br/>
 <br/>
-/usr/example/example.confÅäÖÃÎÄ¼şÈçÏÂ <br/>
+/usr/example/example.confé…ç½®æ–‡ä»¶å¦‚ä¸‹ <br/>
 <br/>
-Java´úÂë  ÊÕ²Ø´úÂë<br/>
+Javaä»£ç   æ”¶è—ä»£ç <br/>
 server {  <br/>
     listen       80;  <br/>
     server_name  _;  <br/>
@@ -151,6 +152,6 @@ server {  <br/>
         content_by_lua_file /usr/example/lua/test.lua;<br/>
     }  <br/>
 }<br/>
-luaÎÄ¼şÎÒÃÇÊ¹ÓÃ¾ø¶ÔÂ·¾¶/usr/example/lua/test.lua<br/>
+luaæ–‡ä»¶æˆ‘ä»¬ä½¿ç”¨ç»å¯¹è·¯å¾„/usr/example/lua/test.lua<br/>
 <br/>
-µ½´ËÎÒÃÇ¾Í¿ÉÒÔ°ÑexampleÈÓsvn»ògitÉÏÁË¡£<br/>
+åˆ°æ­¤æˆ‘ä»¬å°±å¯ä»¥æŠŠexampleæ‰”svnæˆ–gitä¸Šäº†ã€‚<br/>
