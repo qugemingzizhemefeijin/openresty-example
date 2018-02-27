@@ -1,10 +1,5 @@
-# openresty-example
-openresty example
-
-nginx-1.13.6.tar.gz
-openresty-1.13.6.1.tar.gz
-
-# Install
+# Install 安装流程
+nginx-1.13.6.tar.gz openresty-1.13.6.1.tar.gz
 
 yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl
 
@@ -39,7 +34,7 @@ export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.1
 make -j2 && make install
 
 
-#配置nginx openresty
+# 配置nginx openresty
 nginx.conf中http模块新增
 
 lua_package_path "/usr/local/openresty/lualib/?.lua;;";#lua 模块
@@ -87,7 +82,7 @@ nginx: configuration file /usr/local/nginx-1.13.6/conf/nginx.conf test is succes
 
 则代表安装成功
 
-#lua_code_cache
+# lua_code_cache
 默认情况下lua_code_cache  是开启的，即缓存lua代码，即每次lua代码变更必须reload nginx才生效，如果在开发阶段可以通过lua_code_cache  off;关闭缓存，这样调试时每次修改lua代码不需要reload nginx；但是正式环境一定记得开启缓存。
 
 在lua.conf中
@@ -101,7 +96,7 @@ location /lua {
 nginx: [alert] lua_code_cache is off; this will hurt performance in /usr/servers/nginx/conf/lua.conf:8
 
 
-#错误日志
+# 错误日志
 
 如果运行过程中出现错误，请不要忘记查看错误日志。 
 tail -f /usr/local/nginx/logs/error.log
@@ -109,7 +104,7 @@ tail -f /usr/local/nginx/logs/error.log
 到此我们的基本环境搭建完毕。
 
 
-#nginx+lua项目构建
+# nginx+lua项目构建
 以后我们的nginx lua开发文件会越来越多，我们应该把其项目化，已方便开发。项目目录结构如下所示：
 
 example
