@@ -6,7 +6,7 @@ openresty-1.13.6.1.tar.gz
 
 # Install
 
-yum -y install pcre pcre-devel
+yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl
 
 wget https://openresty.org/download/openresty-1.13.6.1.tar.gz
 tar -zxvf openresty-1.13.6.1.tar.gz
