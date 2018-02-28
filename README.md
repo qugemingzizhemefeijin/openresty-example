@@ -1,5 +1,4 @@
 # Install 安装流程<br/>
-参考开涛的博客 http://jinnianshilongnian.iteye.com/blog/2190344<br/>
 nginx-1.13.6.tar.gz openresty-1.13.6.1.tar.gz<br/>
 <br/>
 yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl<br/>
@@ -31,15 +30,28 @@ tar -zxvf nginx-1.13.6.tar.gz<br/>
 export LUAJIT_LIB=/usr/local/openresty/luajit/lib<br/>
 export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.1<br/>
 <br/>
-./configure --prefix=/usr/local/nginx-1.13.6 --with-ld-opt="-Wl,-rpath,/path/to/luajit-or-lua/lib" --add-module=/root/openresty-1.13.6.1/bundle/ngx_devel_kit-0.3.0 --add-module=/root/openresty-1.13.6.1/bundle/ngx_lua-0.10.11<br/>
+./configure --prefix=/usr/local/nginx-1.13.6 \<br/>
+--with-ld-opt="-Wl,-rpath,/path/to/luajit-or-lua/lib" \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/ngx_devel_kit-0.3.0 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/ngx_lua-0.10.11 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/echo-nginx-module-0.61<br/>
+<br/>
 make -j2 && make install<br/>
 <br/>
 <br/>
 # 配置nginx openresty<br/>
 nginx.conf中http模块新增<br/>
 <br/>
-lua_package_path "/usr/local/openresty/lualib/?.lua;;";#lua 模块<br/>
-lua_package_cpath "/usr/local/openresty/lualib/?.so;;";#c模块<br/>
+http {<br/>
+    include       mime.types;<br/>
+    default_type  application/octet-stream;<br/>
+    sendfile        on;<br/>
+    keepalive_timeout  65;<br/>
+    gzip  on;<br/>
+    lua_package_path "/opt/openresty/openresty-example/lualib/?.lua;;";#lua 模块<br/>
+    lua_package_cpath "/opt/openresty/openresty-example/lualib/?.so;;";#c模块<br/>
+    include /opt/openresty/openresty-example/lua.conf;<br/>
+}<br/>
 <br/>
 将原来的server区块删除掉<br/>
 新建lua.conf放入server区块<br/>
@@ -155,3 +167,11 @@ server {  <br/>
 lua文件我们使用绝对路径/usr/example/lua/test.lua<br/>
 <br/>
 到此我们就可以把example扔svn或git上了。<br/>
+
+# 相关资料<br/>
+参考开涛的博客 (OpenResty + Lua 开发入门) http://jinnianshilongnian.iteye.com/blog/2190344<br/>
+nginx与lua的执行顺序和步骤说明 http://blog.csdn.net/wlgy123/article/details/49815531<br/>
+Lua简明教程 http://coolshell.cn/articles/10739.html<br/>
+lua在线lua学习教程 http://book.luaer.cn/<br/>
+Lua 5.1 参考手册 http://www.codingnow.com/2000/download/lua_manual.html<br/>
+Lua 5.3 参考手册 http://cloudwu.github.io/lua53doc/<br/>
