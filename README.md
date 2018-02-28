@@ -153,7 +153,6 @@ http {<br/>
 <br/>
 /usr/example/example.conf配置文件如下 <br/>
 <br/>
-Java代码  收藏代码<br/>
 server {  <br/>
     listen       80;  <br/>
     server_name  _;  <br/>
