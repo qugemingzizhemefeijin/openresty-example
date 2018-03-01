@@ -95,6 +95,51 @@ nginx: configuration file /usr/local/nginx-1.13.6/conf/nginx.conf test is succes
 <br/>
 则代表安装成功<br/>
 <br/>
+# Install Redis SSDB Twemproxy <br/>
+1.Redis安装<br/>
+wget https://github.com/antirez/redis/archive/2.8.19.tar.gz<br/>
+tar -xvf 2.8.19.tar.gz<br/>
+cd redis-2.8.19/<br/>
+make<br/>
+后台启动Redis服务器<br/>
+nohup /usr/servers/redis-2.8.19/src/redis-server  /usr/servers/redis-2.8.19/redis.conf &<br/>
+查看是否启动成功<br/>
+ps -aux | grep redis<br/>
+进入客户端<br/>
+/usr/servers/redis-2.8.19/src/redis-cli  -p 6379<br/>
+执行如下命令 <br/>
+127.0.0.1:6379> set i 1<br/>
+OK<br/>
+127.0.0.1:6379> get i<br/>
+"1" <br/>
+通过如上命令可以看到我们的Redis安装成功。更多细节请参考http://redis.io/。<br/>
+<br/>
+2.SSDB安装与使用<br/>
+首先确保安装了g++，如果没有安装，如ubuntu可以使用如下命令安装<br/>
+yum -y install gcc gcc-c++<br/>
+wget -O ssdb.1.9.4.tar.gz https://github.com/ideawu/ssdb/archive/1.9.4.tar.gz<br/>
+tar -zxvf ssdb.1.9.4.tar.gz<br/>
+cd ssdb-1.9.4<br/>
+make<br/>
+mv ssdb-1.9.4 /usr/local<br/>
+cd /usr/local/<br/>
+ln -s ssdb-1.9.4 ssdb<br/>
+<br/>
+后台启动SSDB服务器<br/>
+nohup /usr/local/ssdb/ssdb-server  /usr/local/ssdb/ssdb.conf &<br/>
+查看是否启动成功<br/>
+ps -aux | grep ssdb<br/>
+进入客户端<br/>
+/usr/local/ssdb/tools/ssdb-cli -p 8888<br/>
+redis-cli -p 8888<br/>
+因为SSDB支持Redis协议，所以用Redis客户端也可以访问<br/>
+执行如下命令<br/>
+127.0.0.1:8888> set i 1<br/>
+OK<br/>
+127.0.0.1:8888> get i<br/>
+"1"<br/>
+安装过程中遇到错误请参考http://ssdb.io/docs/zh_cn/install.html；对于SSDB的配置请参考官方文档https://github.com/ideawu/ssdb。<br/>
+<br/>
 # lua_code_cache<br/>
 默认情况下lua_code_cache  是开启的，即缓存lua代码，即每次lua代码变更必须reload nginx才生效，如果在开发阶段可以通过lua_code_cache  off;关闭缓存，这样调试时每次修改lua代码不需要reload nginx；但是正式环境一定记得开启缓存。<br/>
 <br/>
