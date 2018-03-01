@@ -54,7 +54,7 @@ if not sha1 then
     return close_redis(red)
 end
 
---首先通过script load导入脚本并得到一个sha1校验和（仅需第一次导入即可），然后通过evalsha执行sha1校验和即可，这样如果脚本很长通过这种方式可以减少带宽的消耗。 
+--首先通过script load导入脚本并得到一个sha1校验和（仅需第一次导入即可），然后通过evalsha执行sha1校验和即可，这样如果脚本很长通过这种方式可以减少带宽的消耗。
 
 ngx.say("sha1 : ", sha1, "<br/>")
 local resp, err = red:evalsha(sha1, 1, "msg");
