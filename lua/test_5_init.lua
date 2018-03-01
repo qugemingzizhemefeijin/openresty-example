@@ -8,6 +8,7 @@
 --共享全局变量，在所有worker间共享
 --lua_shared_dict shared_data 1m;
 --init_by_lua_file /opt/openresty/openresty-example/lua/init.lua;
+--初始化的全局变量是每请求复制一个；如果想在多个Worker进程间共享数据可以使用ngx.shared.DICT或如Redis之类的存储。
 
 --初始化耗时的模块
 local redis = require 'resty.redis'
