@@ -34,6 +34,7 @@ export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.1<br/>
 --with-ld-opt="-Wl,-rpath,/path/to/luajit-or-lua/lib" \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/ngx_devel_kit-0.3.0 \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/ngx_lua-0.10.11 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/nginx_upstream_check_module-0.3.0 \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/echo-nginx-module-0.61<br/>
 <br/>
 make -j2 && make install<br/>
