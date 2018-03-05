@@ -3,7 +3,7 @@ local var = ngx.var
 ngx.say("ngx.var.a : ", var.a, "<br/>")
 ngx.say("ngx.var.b : ", var.b, "<br/>")
 ngx.say("ngx.var[2] : ", var[2], "<br/>")
-#如果要赋值的话b必须在lua.conf中提前set，否则将报错
+--如果要赋值的话b必须在lua.conf中提前set，否则将报错
 ngx.var.b = 100;
 
 ngx.say("<br/>")

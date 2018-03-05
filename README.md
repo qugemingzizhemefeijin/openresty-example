@@ -96,6 +96,12 @@ nginx: configuration file /usr/local/nginx-1.13.6/conf/nginx.conf test is succes
 <br/>
 则代表安装成功<br/>
 <br/>
+# Download lua-resty-template <br/>
+cd lualib/resty<br/>
+wget https://raw.githubusercontent.com/bungle/lua-resty-template/master/lib/resty/template.lua<br/>
+mkdir html<br/>
+cd html<br/>
+wget https://raw.githubusercontent.com/bungle/lua-resty-template/master/lib/resty/template/html.lua<br/>
 # Install Redis SSDB Twemproxy <br/>
 1.Redis安装<br/>
 wget https://github.com/antirez/redis/archive/2.8.19.tar.gz<br/>
