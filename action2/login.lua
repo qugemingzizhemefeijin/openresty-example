@@ -6,6 +6,9 @@
 -- To change this template use File | Settings | File Templates.
 --
 
+local common = require("module.common")
+local context = common.page_init()
+
 local template = require("resty.template")
-template.render("login.html")
+template.render("login.html" , context)
 

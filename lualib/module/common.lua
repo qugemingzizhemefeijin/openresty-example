@@ -9,8 +9,78 @@
 
 local mysql = require("resty.mysql")
 local dkjson = require("dkjson")
+local ck = require "resty.cookie"
 local ngx_log = ngx.log
 local ngx_ERR = ngx.ERR
+
+-- 系统常量值
+local web_name = "OpenResty"
+local copy_right = web_name .. " &copy; 2016-2020"
+
+--模版页面初始化载入执行的函数
+local function page_init()
+    local context = {
+        global = {
+            web_name = web_name,
+            copy_right = copy_right
+        },
+        user = {
+            userid = ngx.var.userid,
+            username = ngx.var.username
+        }
+    }
+
+    return context
+end
+
+--获得分页数
+local function checkPostBodyQuery(query)
+    local pageSize = query.length
+    if pageSize <= 0 then
+        pageSize = 20
+    elseif pageSize > 100 then
+        pageSize = 100
+    end
+    query.length = pageSize
+
+    if query.start < 0 then
+        query.start = 0
+    end
+end
+
+--设置cookie
+local function setCookie(t)
+    local cookie, err = ck:new()
+    if not cookie then
+        ngx_log(ngx_ERR, err)
+        return false
+    end
+
+    local ok, err = cookie:set(t)
+    if not ok then
+        ngx_log(ngx_ERR, err)
+        return false
+    end
+
+    return true
+end
+
+--获取cookie
+local function getCookie(key)
+    local cookie, err = ck:new()
+    if not cookie then
+        ngx_log(ngx_ERR, err)
+        return ngx.null
+    end
+
+    local field, err = cookie:get(key)
+    if not field then
+        ngx_log(ngx_ERR, err)
+        return ngx.null
+    end
+
+    return field
+end
 
 --生成常量表功能
 local function newConst( const_table )
@@ -193,6 +263,10 @@ local _M = {
     toMd5 = toMd5,
     isNull = isNull,
     isEmpty = isEmpty,
+    setCookie = setCookie,
+    getCookie = getCookie,
+    page_init = page_init,
+    checkPostBodyQuery = checkPostBodyQuery,
     CONST = newConst({
         RESULT_TYPE_SELFPAGE = 1,
         RESULT_TYPE_FUNCTION = 2,
@@ -203,7 +277,9 @@ local _M = {
         RESULT_TYPE_NO_OPERATE = 7,
         RESULT_TYPE_CLOSE_SELFPAGE_RELOAD_OPENER = 8,
         RESULT_TYPE_CLOSE_SELFPAGE = 9,
-        RESULT_TYPE_REFRESH_TABLE = 10
+        RESULT_TYPE_REFRESH_TABLE = 10,
+        WEB_NAME = web_name,
+        COPY_RIGHT = copy_right
     })
 }
 

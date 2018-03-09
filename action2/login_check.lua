@@ -50,6 +50,20 @@ if admin[1].password ~= common.toMd5(password) then
     return ngx.exit(200)
 end
 
+--记录登录信息到cookie
+local user = {
+    id = admin[1].id,
+    username = admin[1].username,
+    token = ngx.md5(admin[1].id.."#"..admin[1].username.."#"..ngx.var.encode_salt)
+}
+common.setCookie({
+    key = "user",
+    value = ngx.escape_uri(common.toJsonString(user)),
+    path = "/",
+    secure = true,
+    httponly = true
+})
+
 local res = common.ok("登录成功，正在跳转中...","/index" , CONST.RESULT_TYPE_URL)
 ngx.say(toJsonString(res))
 

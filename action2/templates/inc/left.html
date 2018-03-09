@@ -5,8 +5,8 @@
                 <div class="dropdown profile-element">
                     <span><img alt="image" class="img-circle" src="/static/img/profile_small.jpg" width="48" height="48" /></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-		                <span class="clear"><span class="block m-t-xs"><strong class="font-bold">陈刚</strong></span>
-		                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span></span>
+		                <span class="clear"><span class="block m-t-xs"><strong class="font-bold">{* user.username *}</strong></span>
+		                <span class="text-muted text-xs block">管理员<b class="caret"></b></span></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="/user/profile/info">个人资料</a></li>
@@ -18,11 +18,9 @@
                 <div class="logo-element">BM</div>
             </li>
             <li class="active">
-                <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa  fa-user"></i> <span class="nav-label">客户管理</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href=/index/summary">总览</a></li>
-                    <li><a href="/index/statistics/list">统计</a></li>
-                    <li><a href="/iotcard/list">卡片管理</a></li>
+                    <li><a href="/customer/user/list">用户列表</a></li>
                 </ul>
             </li>
         </ul>

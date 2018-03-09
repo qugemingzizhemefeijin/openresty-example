@@ -1,7 +1,7 @@
 # Install 安装流程<br/>
 nginx-1.13.6.tar.gz openresty-1.13.6.1.tar.gz<br/>
 <br/>
-yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl<br/>
+yum -y install pcre pcre-devel libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl openssl openssl-devel GeoIP GeoIP-devel<br/>
 <br/>
 wget https://openresty.org/download/openresty-1.13.6.1.tar.gz<br/>
 tar -zxvf openresty-1.13.6.1.tar.gz<br/>
@@ -31,11 +31,18 @@ export LUAJIT_LIB=/usr/local/openresty/luajit/lib<br/>
 export LUAJIT_INC=/usr/local/openresty/luajit/include/luajit-2.1<br/>
 <br/>
 ./configure --prefix=/usr/local/nginx-1.13.6 \<br/>
---with-ld-opt="-Wl,-rpath,/path/to/luajit-or-lua/lib" \<br/>
+--with-ld-opt="-Wl,-rpath,/usr/local/openresty/luajit/lib" \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/ngx_devel_kit-0.3.0 \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/ngx_lua-0.10.11 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/headers-more-nginx-module-0.33 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/iconv-nginx-module-0.14 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/form-input-nginx-module-0.12 \<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/array-var-nginx-module-0.05 \<br/>
 --add-module=/root/openresty-1.13.6.1/bundle/nginx_upstream_check_module-0.3.0 \<br/>
---add-module=/root/openresty-1.13.6.1/bundle/echo-nginx-module-0.61<br/>
+--add-module=/root/openresty-1.13.6.1/bundle/echo-nginx-module-0.61 \<br/>
+--with-http_ssl_module \<br/>
+--with-http_v2_module \<br/>
+--with-http_stub_status_module<br/>
 <br/>
 make -j2 && make install<br/>
 <br/>
