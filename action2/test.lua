@@ -6,14 +6,27 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local common = require("module.common")
+--[[local common = require("module.common")
 local ss = '{"draw":1,"columns":[{"data":"id","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"id","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"fr","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"nickname","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"sex","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"cityname","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"signature","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":"birthday","name":"","searchable":false,"orderable":false,"search":{"value":"","regex":false}},{"data":8,"name":"","searchable":true,"orderable":false,"search":{"value":"","regex":false}}],"order":[],"start":0,"length":10,"totalLength":0,"search":{"value":"","regex":false},"_ajax":true}'
 
 ngx.log(ngx.ERR , "body :" , ss)
 
 local ss = common.toJsonObject(ss)
 ngx.say("id = " , ss.draw , "<br/>")
+]]--
 
+local ngx_log = ngx.log
+local ngx_ERR = ngx.ERR
+
+local common = require("module.common")
+local apparea = require("module.apparea")
+local area = apparea.findById(3647)
+
+if common.isEmpty(area) ~= true then
+    ngx_log(ngx_ERR , "user_list is not empty")
+end
+
+ngx.say("===========")
 
 --[[local salt = "*&^%$#$^&kjtrKUYG"
 local common = require("module.common")

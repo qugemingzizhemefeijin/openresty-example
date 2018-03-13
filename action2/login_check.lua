@@ -60,7 +60,6 @@ common.setCookie({
     key = "user",
     value = ngx.escape_uri(common.toJsonString(user)),
     path = "/",
-    secure = true,
     httponly = true
 })
 
